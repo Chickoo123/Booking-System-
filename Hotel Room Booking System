@@ -1,0 +1,82 @@
+#include <iostream>
+using namespace std;
+
+const int MAX_ROOMS = 100;  // Maximum number of rooms
+int queue[MAX_ROOMS], n = MAX_ROOMS, front = -1, rear = -1;
+
+void BookRoom() {
+    int roomNumber;
+    if ((rear + 1) % n == front) {  // Check if queue is full
+        cout << "Hotel is fully booked." << endl;
+    } else {
+        cout << "Enter room number to book: ";
+        cin >> roomNumber;
+        
+        // Handle room number validation if necessary
+
+        rear = (rear + 1) % n;  // Circular increment
+        queue[rear] = roomNumber;
+
+        if (front == -1) {  // Queue was empty
+            front = 0;
+        }
+    }
+}
+
+void CancelBooking() {
+    if (front == -1 || front > rear) {  // Check if queue is empty
+        cout << "No bookings to cancel." << endl;
+    } else {
+        cout << "Booking canceled for room number: " << queue[front] << endl;
+        front = (front + 1) % n;  // Circular increment
+
+        if (front > rear) {  // Queue is empty after deletion
+            front = rear = -1;
+        }
+    }
+}
+
+void DisplayBookings() {
+    if (front == -1) {  // Check if queue is empty
+        cout << "No current bookings." << endl;
+    } else {
+        cout << "Current bookings are: " << endl;
+        int i = front;
+        while (true) {
+            cout << "Room " << queue[i] << endl;
+            if (i == rear) break;
+            i = (i + 1) % n;  // Circular increment
+        }
+    }
+}
+
+int main() {
+    int ch;
+    cout << "1) Book a room" << endl;
+    cout << "2) Cancel a booking" << endl;
+    cout << "3) Display all current bookings" << endl;
+    cout << "4) Exit" << endl;
+
+    do {
+        cout << "Enter your choice: ";
+        cin >> ch;
+        switch (ch) {
+            case 1:
+                BookRoom();
+                break;
+            case 2:
+                CancelBooking();
+                break;
+            case 3:
+                DisplayBookings();
+                break;
+            case 4:
+                cout << "Exit" << endl;
+                break;
+            default:
+                cout << "Invalid Choice" << endl;
+        }
+    } while (ch != 4);
+
+    return 0;
+}
