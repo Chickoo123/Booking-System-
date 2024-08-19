@@ -1,0 +1,95 @@
+#include <iostream>
+using namespace std;
+
+#define MAX_SIZE 5
+
+class TicketQueue {
+private:
+    int front, rear;
+    int arr[MAX_SIZE];
+
+public:
+    TicketQueue() {
+        front = -1;
+        rear = -1;
+    }
+
+    bool isFull() {
+        return rear == MAX_SIZE - 1;
+    }
+
+    bool isEmpty() {
+        return front == -1 || front > rear;
+    }
+
+    void enqueue(int ticketID) {
+        if (isFull()) {
+            cout << "Booking system is full. Please try again later." << endl;
+            return;
+        }
+        if (isEmpty()) {
+            front = 0;
+        }
+        rear++;
+        arr[rear] = ticketID;
+        cout << "Ticket request " << ticketID << " is added to the queue." << endl;
+    }
+
+    void dequeue() {
+        if (isEmpty()) {
+            cout << "No ticket requests to process." << endl;
+            return;
+        }
+        cout << "Processing ticket request " << arr[front] << endl;
+        front++;
+    }
+
+    void display() {
+        if (isEmpty()) {
+            cout << "No ticket requests in the queue." << endl;
+            return;
+        }
+        cout << "Current ticket requests in queue: ";
+        for (int i = front; i <= rear; i++) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    TicketQueue tq;
+    int choice, ticketID;
+
+    while (true) {
+        cout << "\nTicket Booking System Menu:\n";
+        cout << "1. Add Ticket Request\n";
+        cout << "2. Process Ticket Request\n";
+        cout << "3. Display Queue\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter Ticket ID to add: ";
+                cin >> ticketID;
+                tq.enqueue(ticketID);
+                break;
+            case 2:
+                tq.dequeue();
+                break;
+            case 3:
+                tq.display();
+                break;
+            case 4:
+                cout << "Exiting..." << endl;
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+        }
+    }
+
+    return 0;
+}
