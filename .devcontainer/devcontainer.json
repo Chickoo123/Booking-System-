@@ -1,0 +1,5 @@
+{
+  "name": "Booking-System-",
+  "image": "mcr.microsoft.com/devcontainers/cpp:ubuntu-24.04",
+  "postCreateCommand": "make test"
+}
